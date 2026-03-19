@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="icon" type="image/png" href="https://i.postimg.cc/ht0Xngws/Desau-Kutukan.png">
+  <title>Desau Kutukan - Official Homepage</title>
+  <meta name="description" content="Desau Kutukan adalah game visual novel horror psikologis berbasis novel karya Tegar Ibrahim." />
+  <style>
+    :root {
+      --bg: #060606;
+      --bg-soft: rgba(255,255,255,0.04);
+      --card: rgba(255,255,255,0.05);
+      --line: rgba(255,255,255,0.1);
+      --text: #f5f5f5;
+      --muted: #b7b7b7;
+      --soft: #8d8d8d;
+      --red: #d22b2b;
+      --red-soft: rgba(210,43,43,0.14);
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --container: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(115,10,10,0.32), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.04), transparent 20%),
+        linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.92)),
+        var(--bg);
+      color: var(--text);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: min(var(--container), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(0,0,0,0.48);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-small {
+      margin: 0 0 4px;
+      font-size: 10px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(255, 190, 190, 0.75);
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0.28em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 14px 24px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(120, 0, 0, 0.35);
+    }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+    .btn-secondary:hover,
+    .nav-cta:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--red-soft);
+      border: 1px solid rgba(255, 120, 120, 0.22);
+      color: #ffe2e2;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .hero {
+      min-height: calc(100vh - 76px);
+      display: grid;
+      align-items: center;
+      padding: 56px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: #d7d7d7;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      margin: 22px 0 0;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .hero h2 span { color: #ff5d5d; display: block; }
+
+    .hero p {
+      max-width: 720px;
+      margin: 24px 0 0;
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .stats {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 760px;
+    }
+
+    .stat-card,
+    .card,
+    .feature-card,
+    .screenshot-card,
+    .about-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat-card small {
+      display: block;
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .hero-card-wrap {
+      position: relative;
+    }
+
+    .hero-card-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -24px;
+      background: rgba(140, 0, 0, 0.14);
+      filter: blur(50px);
+      border-radius: 40px;
+      z-index: 0;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-art {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: #101010;
+    }
+
+    .hero-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.84), rgba(0,0,0,0.16), transparent);
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 24px;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.42em;
+      color: rgba(255, 183, 183, 0.8);
+    }
+
+    .hero-quote {
+      margin: 14px 0 0;
+      max-width: 460px;
+      color: #e5e5e5;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-label {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255, 183, 183, 0.8);
+    }
+
+    .section-title {
+      margin: 16px 0 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.15;
+    }
+
+    .story-grid,
+    .about-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .story-grid {
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: start;
+    }
+
+    .story-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: 28px;
+      padding: 28px;
+    }
+
+    .card p,
+    .feature-card p,
+    .about-copy,
+    .section-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .features-top,
+    .screenshots-top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      border-radius: 28px;
+      padding: 26px;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      /* border-radius: 14px;
+      background: var(--red-soft);
+      border: 1px solid rgba(255, 120, 120, 0.2); */
+      margin-bottom: 18px;
+    }
+
+    .feature-card h4 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .screenshot-card {
+      overflow: hidden;
+      border-radius: 28px;
+    }
+
+    .screenshot-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .screenshot-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .screenshot-card:hover .screenshot-media img {
+      transform: scale(1.03);
+    }
+
+    .screenshot-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.74), rgba(0,0,0,0.08), transparent);
+      pointer-events: none;
+    }
+
+    .screenshot-title {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      z-index: 2;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .fallback {
+      display: none;
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(60,0,0,0.55), rgba(10,10,10,0.96));
+      color: #d0d0d0;
+      z-index: 1;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .fallback span {
+      display: block;
+      margin-top: 8px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .about-shell {
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(120,0,0,0.18), rgba(255,255,255,0.04));
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .about-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      padding: 36px;
+    }
+
+    .about-panel {
+      border-radius: 24px;
+      padding: 24px;
+      background: rgba(0,0,0,0.22);
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-row strong { color: #fff; font-size: 14px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--red-soft);
+      border: 1px solid rgba(255,120,120,0.18);
+      color: #ffe2e2;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .play-actions {
+      margin-top: 15px;
+      display: grid;
+      /* grid-template-columns: repeat(2, minmax(0, 1fr)); */
+      gap: 12px;
+    }
+
+    .footer {
+      padding: 28px 0 46px;
+      color: #8d8d8d;
+      font-size: 13px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: #fff;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .story-grid,
+      .about-grid,
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid,
+      .screenshots-grid,
+      .story-cards,
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .features-top,
+      .screenshots-top {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(var(--container), calc(100% - 28px));
+      }
+
+      .header-inner {
+        min-height: 72px;
+      }
+
+      .mobile-menu-btn { display: inline-flex; }
+
+      .nav {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 14px;
+        right: 14px;
+        padding: 16px;
+        border-radius: 20px;
+        background: rgba(8,8,8,0.98);
+        border: 1px solid var(--line);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .nav.open { display: flex; }
+      .nav-cta { display: none; }
+
+      .hero p { font-size: 16px; }
+      .section { padding: 56px 0; }
+      .card, .feature-card, .about-panel { padding: 22px; }
+      .about-grid { padding: 22px; }
+      .hero-card { padding: 12px; }
+    }
+
+    @media (max-width: 560px) {
+      .stats,
+      .screenshots-grid,
+      .story-cards,
+      .features-grid,
+      .play-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top">
+        <p class="brand-small">XKYSOFT Interactive</p>
+        <h1 class="brand-title">Desau Kutukan - Whisper of the Curse</h1>
+      </a>
+
+      <nav class="nav" id="siteNav">
+        <a href="#story">Story</a>
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a class="nav-cta" href="#play">Play Now</a>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Indonesian Horror Visual Novel</div>
+          <h2>
+            Sebuah kutukan lama,
+            <span>bisikan yang tak berhenti.</span>
+          </h2>
+          <p>
+            <strong style="color:#fff;">Desau Kutukan</strong> adalah game visual novel Indonesia dengan genre horror psikologis yang diangkat dari novel horror berjudul <strong style="color:#fff;">"Takut"</strong> <br>karya <strong style="color:#fff;">Tegar Ibrahim</strong> yang ditulis pada tahun 2008.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#play">Play Now</a>
+            <!-- <a class="btn btn-secondary" href="#trailer">Watch Trailer</a> -->
+            <a class="btn btn-secondary" href="#screenshots">View Screenshots</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card"><small>Genre</small><strong>Horror VN</strong></div>
+            <div class="stat-card"><small>Language</small><strong>Indonesia</strong></div>
+            <div class="stat-card"><small>Format</small><strong>Story Driven</strong></div>
+            <div class="stat-card"><small>Experience</small><strong>Psychological</strong></div>
+          </div>
+        </div>
+
+        <div class="hero-card-wrap">
+          <div class="hero-card">
+            <div class="hero-art">
+              <img src="images/keyart/Desau Kutukan-cover.jpg" alt="Desau Kutukan key art" data-fallback="keyart-fallback" />
+              <div class="fallback" id="keyart-fallback">
+                Simpan cover art pada path:
+                <span>images/keyart/Desau Kutukan-cover.jpg</span>
+              </div>
+              <div class="hero-overlay">
+                <p class="eyebrow">Berani untuk terjun kedalam kegelapan?</p>
+                <p class="hero-quote">“Ketika pintu terbuka, bukan lagi rumah yang menunggu, melainkan sesuatu yang ingin ikut pulang.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container story-grid">
+        <div>
+          <p class="section-label">Story</p>
+          <h3 class="section-title">Teror yang dimulai dari rasa penasaran.</h3>
+        </div>
+        <div class="story-cards">
+          <div class="card">
+            <p>
+              Ikuti kisah Sinta yang perlahan terseret ke dalam kejadian janggal 
+              dan sosok-sosok yang terus muncul setiap kali malam turun.
+            </p>
+          </div>
+          <div class="card">
+            <p>
+              Setiap scene membangun rasa tidak aman secara perlahan dengan background music yang mencekam.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="features-top">
+          <div>
+            <p class="section-label">Features</p>
+            <h3 class="section-title">Rasakan fitur dari game ini.</h3>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><img src="images/keyart/git-branch_2.png" alt="Desau Kutukan key art" data-fallback="keyart-fallback" /></div>
+            <h4>Branching Horror Narrative</h4>
+            <p>Pilihan pemain memengaruhi alur cerita, tensi, dan bagaimana teror berkembang di setiap scene.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon"><img src="images/keyart/environment_2.png" alt="Desau Kutukan key art" data-fallback="keyart-fallback" /></div>
+            <h4>Atmosfer Indonesia yang Dekat</h4>
+            <p>Bahasa Indonesia, setting yang familiar, dan nuansa lokal membuat horornya terasa lebih personal.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon"><img src="images/keyart/brain_1.png" alt="Desau Kutukan key art" data-fallback="keyart-fallback" /></div>
+            <h4>Psychological Dread</h4>
+            <p>Bersiaplah karena rasa tidak nyaman yang dibangun perlahan lewat dialog, ambience, dan visual.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon"><img src="images/keyart/music_10.png" alt="Desau Kutukan key art" data-fallback="keyart-fallback" /></div>
+            <h4>Emotional Music dan Sound Design</h4>
+            <p>Secara khusus di compose untuk game ini, sehingga membuat suasana dan emosi menjadi semakin terasa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshots">
+      <div class="container">
+        <div class="screenshots-top">
+          <div>
+            <p class="section-label">Screenshots</p>
+            <h3 class="section-title">Intip Gameplay Preview</h3>
+          </div>
+        </div>
+
+        <div class="screenshots-grid">
+          <article class="screenshot-card">
+            <div class="screenshot-media">
+              <img src="images/screenshots/hospital-scene.jpg" alt="Desau Kutukan gameplay screenshot hospital scene" data-fallback="shot-1" />
+              <div class="fallback" id="shot-1">Simpan screenshot pada path:<span>images/screenshots/hospital-scene.jpg</span></div>
+              <p class="screenshot-title">Hospital Corridor</p>
+            </div>
+          </article>
+
+          <article class="screenshot-card">
+            <div class="screenshot-media">
+              <img src="images/screenshots/antique-shop-scene.jpg" alt="Desau Kutukan gameplay screenshot antique shop scene" data-fallback="shot-2" />
+              <div class="fallback" id="shot-2">Simpan screenshot pada path:<span>images/screenshots/antique-shop-scene.jpg</span></div>
+              <p class="screenshot-title">Antique Shop</p>
+            </div>
+          </article>
+
+          <article class="screenshot-card">
+            <div class="screenshot-media">
+              <img src="images/screenshots/bedroom-scene.jpg" alt="Desau Kutukan gameplay screenshot bedroom scene" data-fallback="shot-3" />
+              <div class="fallback" id="shot-3">Simpan screenshot pada path:<span>images/screenshots/bedroom-scene.jpg</span></div>
+              <p class="screenshot-title">Bedroom Scene</p>
+            </div>
+          </article>
+
+          <article class="screenshot-card">
+            <div class="screenshot-media">
+              <img src="images/screenshots/basement-scene.jpg" alt="Desau Kutukan gameplay screenshot basement parking scene" data-fallback="shot-4" />
+              <div class="fallback" id="shot-4">Simpan screenshot pada path:<span>images/screenshots/basement-scene.jpg</span></div>
+              <p class="screenshot-title">Basement Parking</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-shell">
+          <div class="about-grid">
+            <div>
+              <p class="section-label">About the Project</p>
+              <h3 class="section-title">Based on the horror novel "Takut" by Tegar Ibrahim.</h3>
+              <p class="about-copy" style="margin-top: 18px; max-width: 760px;">
+                Apa yang dimulai sebagai cerita biasa tiba-tiba berubah menjadi mimpi buruk yang tidak bisa kamu hindari. 
+                <br>Semakin kamu melanjutkannya semakin dekat sesuatu itu denganmu. <br> Pilihanmu menentukan segalanya, Berani coba?
+              </p>
+
+            </div>
+
+            <div class="about-panel">
+              <div class="info-row">
+                <span>Release Status</span>
+                <span class="badge">Coming Soon</span>
+              </div>
+              <div class="info-row">
+                <span>Developer</span>
+                <strong>XKYSOFT Interactive</strong>
+              </div>
+              <div class="info-row">
+                <span>Language</span>
+                <strong>Bahasa Indonesia</strong>
+              </div>
+              <div class="info-row" style="border-bottom:0; margin-bottom:0; padding-bottom:6px;">
+                <span>Platform</span>
+                <strong>Web (Mobile Web Compatibility) / PC Distribution</strong>
+              </div>
+
+              <div class="play-actions" id="play">
+                <a class="btn btn-primary" href="https://desau-kutukan-visual-novel.vercel.app/">play Link</a>
+                <!-- <a class="btn btn-secondary" href="#">Steam / Itch.io</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> XKYSOFT Interactive. All rights reserved.
+    </div>
+    
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const siteNav = document.getElementById('siteNav');
+
+    if (menuBtn && siteNav) {
+      menuBtn.addEventListener('click', () => {
+        siteNav.classList.toggle('open');
+      });
+
+      siteNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => siteNav.classList.remove('open'));
+      });
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.querySelectorAll('img[data-fallback]').forEach(img => {
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+        const fallbackId = img.getAttribute('data-fallback');
+        const fallback = document.getElementById(fallbackId);
+        if (fallback) fallback.style.display = 'flex';
+      });
+    });
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -45% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
