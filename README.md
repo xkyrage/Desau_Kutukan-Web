@@ -7,8 +7,7 @@
 <img width="1364" height="877" alt="image" src="https://github.com/user-attachments/assets/461c83ac-89a2-4ba4-8ea9-63528b962388" />
 
 [![Sponsor on GitHub](https://dabuttonfactory.com/button.png?t=Click+To+Visit&f=Roboto-Bold&ts=28&tc=fff&hp=45&vp=20&w=1000&h=50&c=11&bgt=unicolored&bgc=f00)](https://desau-kutukan-official-page.vercel.app/)
-Landing page untuk game visual novel horror **Desau Kutukan** (Whisper of the Curse).
-Dibuat menggunakan **HTML, CSS, dan JavaScript vanilla** sehingga bisa langsung digunakan di **GitHub Pages** tanpa setup tambahan.
+
 
 ---
 
